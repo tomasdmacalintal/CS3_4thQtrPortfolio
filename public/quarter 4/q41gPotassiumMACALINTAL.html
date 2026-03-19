@@ -27,7 +27,7 @@
             text-align: center;
             color: white;
             animation:  slidedown 1.5s ease,
-                        shine 6s ease infinite alternate;
+                        shinetext 6s ease infinite alternate;
             user-select: none;
         }
         h1{
@@ -72,6 +72,22 @@
             background-position: 50% 0;
             user-select: none;
         }
+        form{
+            background-color: transparent;
+            width: 500px;
+            justify-self: center;
+            padding: 30px;
+            margin: 50px;
+            border: 2px solid white;
+            animation:  slideup 2s ease,
+                        shinebox 6s ease infinite alternate;
+            border-radius: 20px;
+        }
+        label{
+            animation: shinetext 6s ease infinite alternate;
+            color: white;
+
+        }
 
         @keyframes slidedown {
             0% {transform: translateY(-400%);}
@@ -93,12 +109,23 @@
             0% {background-size: 800% 800%; background-position: center center;}
             100% {background-size: 150% 150%; background-position: center center;}
         }
-        @keyframes shine {
+        @keyframes shinetext {
             0% {text-shadow: 0px 0px 10px rgb(51, 198, 235),
             0px 0px 10px rgba(51, 198, 235),
             0px 0px 10px rgba(51, 198, 235);}
 
             100% {text-shadow: 0px 0px 10px rgb(51, 198, 235),
+            0px 0px 10px rgba(51, 198, 235),
+            0px 0px 10px rgba(51, 198, 235),
+            0px -20px 20px rgba(255, 255, 255, 0.2),
+            0px 20px 20px rgba(255, 255, 255,0.2);}
+        }
+        @keyframes shinebox {
+            0% {box-shadow: 0px 0px 10px rgb(51, 198, 235),
+            0px 0px 10px rgba(51, 198, 235),
+            0px 0px 10px rgba(51, 198, 235);}
+
+            100% {box-shadow: 0px 0px 10px rgb(51, 198, 235),
             0px 0px 10px rgba(51, 198, 235),
             0px 0px 10px rgba(51, 198, 235),
             0px -20px 20px rgba(255, 255, 255, 0.2),
@@ -112,7 +139,48 @@
     <div id="right-pattern"></div>
     <h1 class="moving-element">MOVIE RATER</h1>
     <h2 class="moving-element">"Good or not, your rating still matters."</h2>
-    <div id="form"class="moving-element"></div>
+    <form class="moving-element" id="clubForm" onsubmit="submitForm(event)" onreset="clearForm(event)">
+        <div class="field">
+            <label class="label">Title:</label>
+            <div class="control">
+                <input type="text" name="q1" class="shortanswer" onblur="handleBlur(event)">
+            </div>
+        </div>
+        
+        <div class="field">
+            <label class="label">Year:</label>
+            <div class="control">
+                <input type="number" name="q2" class="shortanswer" onblur="handleBlur(event)">
+            </div>
+        </div>
+
+
+        <div class="field">
+            <label class="label">Genre:</label>
+            <div class="control">
+                <select name="q6" onblur="handleBlur(event)">
+                    <option name="q6" value="" disabled selected hidden>Choose..</option>
+                    <option name="q6" value="1">Action</option>
+                    <option name="q6" value="2">Comedy</option>
+                    <option name="q6" value="3">Horror</option>
+                    <option name="q6" value="4">Drama</option>
+                    <option name="q6" value="5">Sci-fi</option>
+                    <option name="q6" value="6">Romance</option>
+                    <option name="q6" value="7">Thriller</option>
+                    <option name="q6" value="8">Fantasy</option>
+                    <option name="q6" value="9">Documentary</option>
+                    <option name="q6" value="10">Historical</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="line">
+            <input type="submit">
+            <input type="reset">
+        </div>
+        
+    </form>
+
     <script>
         const movingElement = document.getElementsByClassName('moving-element');
         window.addEventListener('mousemove', (event) => {
