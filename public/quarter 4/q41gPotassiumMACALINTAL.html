@@ -100,22 +100,37 @@
             border: 2px solid rgb(30, 101, 119);
             border-radius: 5px;
             color: rgb(56, 181, 212);
+            appearance: none;
+            outline: none;
+            font-family: 'Courier New', Courier, monospace;
         }
-        input:hover, select:hover{
+        select option {
+            background-color: rgb(141, 230, 252);
+            color: rgb(30, 101, 119);
+        }
+        input:hover, select:hover, input:focus, select:focus{
             border: 2px solid rgb(34, 177, 212);
             color: rgb(156, 235, 255);
+        }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
         }
         select{
             width: 110px;
             height: 20px;
-            appearance: none;
-            background: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/pattern.png');
+            background: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/select.png');
+            background-position: -2px -1px;
+        }
+        select:hover{
+            background: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/select_hovered.png');
+            background-position: -2px -1px;
         }
         .shortanswer{
             border: none;
             border-bottom: 2px solid rgb(30, 101, 119);
         }
-        .shortanswer:hover{
+        .shortanswer:hover, .shortanswer:focus{
             border: none;
             border-bottom: 2px solid rgb(34, 177, 212);
         }
@@ -172,18 +187,18 @@
     </div>
     <h1 class="moving-element">MOVIE RATER</h1>
     <h2 class="moving-element">"Good or not, your rating still matters."</h2>
-    <form class="moving-element" id="form" onsubmit="submitForm(event)" onreset="clearForm(event)">
+    <form class="moving-element" id="form" onsubmit="submitForm(event)">
         <div class="field">
             <label class="label">Title:</label>
             <div class="control">
-                <input type="text" name="q1" class="shortanswer" onblur="handleBlur(event)">
+                <input type="text" name="q1" class="shortanswer" onblur="handleBlur(event)" autocomplete="off" required>
             </div>
         </div>
         
         <div class="field">
             <label class="label">Year:</label>
             <div class="control">
-                <input type="number" name="q2" class="shortanswer" onblur="handleBlur(event)">
+                <input type="number" name="q2" class="shortanswer" onblur="handleBlur(event)" min="0" autocomplete="off" required>
             </div>
         </div>
 
@@ -191,7 +206,7 @@
         <div class="field">
             <label class="label">Genre:</label>
             <div class="control">
-                <select name="q6" onblur="handleBlur(event)">
+                <select name="q6" onblur="handleBlur(event)" required>
                     <option name="q6" value="" disabled selected hidden>Choose..</option>
                     <option name="q6" value="1">Action</option>
                     <option name="q6" value="2">Comedy</option>
