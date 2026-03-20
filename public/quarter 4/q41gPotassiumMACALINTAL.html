@@ -18,10 +18,17 @@
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+        }
+        #bg{
+            width: 100vw;
             height: 100vh;
             background: radial-gradient(at center, #050812, #111a3a, #1f4e8c);
             animation: pulse 6s ease infinite alternate;
             overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         h1, h2 {
             text-align: center;
@@ -52,7 +59,6 @@
             top: 0;
             left: 0;
             animation: scrollup 8s linear infinite;
-            overflow: hidden;
             background-image: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/pattern.png');
             background-repeat: repeat-y;
             background-position: 50% 0;
@@ -66,7 +72,6 @@
             top: 0;
             right: 0;
             animation: scrolldown 8s linear infinite;
-            overflow: hidden;
             background-image: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/pattern.png');
             background-repeat: repeat-y;
             background-position: 50% 0;
@@ -86,7 +91,33 @@
         label{
             animation: shinetext 6s ease infinite alternate;
             color: white;
+            user-select: none;
 
+        }
+        input, select{
+            margin-bottom: 20px;
+            background-color: transparent;
+            border: 2px solid rgb(30, 101, 119);
+            border-radius: 5px;
+            color: rgb(56, 181, 212);
+        }
+        input:hover, select:hover{
+            border: 2px solid rgb(34, 177, 212);
+            color: rgb(156, 235, 255);
+        }
+        select{
+            width: 110px;
+            height: 20px;
+            appearance: none;
+            background: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/pattern.png');
+        }
+        .shortanswer{
+            border: none;
+            border-bottom: 2px solid rgb(30, 101, 119);
+        }
+        .shortanswer:hover{
+            border: none;
+            border-bottom: 2px solid rgb(34, 177, 212);
         }
 
         @keyframes slidedown {
@@ -135,11 +166,13 @@
     </style>
 </head>
 <body>
-    <div id="left-pattern"></div>
-    <div id="right-pattern"></div>
+    <div id="bg">
+        <div id="left-pattern"></div>
+        <div id="right-pattern"></div>
+    </div>
     <h1 class="moving-element">MOVIE RATER</h1>
     <h2 class="moving-element">"Good or not, your rating still matters."</h2>
-    <form class="moving-element" id="clubForm" onsubmit="submitForm(event)" onreset="clearForm(event)">
+    <form class="moving-element" id="form" onsubmit="submitForm(event)" onreset="clearForm(event)">
         <div class="field">
             <label class="label">Title:</label>
             <div class="control">
@@ -182,8 +215,12 @@
     </form>
 
     <script>
+        const form = document.getElementById('form');
         const movingElement = document.getElementsByClassName('moving-element');
-        window.addEventListener('mousemove', (event) => {
+        form.addEventListener('animationend', (event) => {
+            document.body.style.overflow = "visible";
+        })
+        document.addEventListener('mousemove', (event) => {
 
             const mouseX = event.clientX;
             const mouseY = event.clientY;
