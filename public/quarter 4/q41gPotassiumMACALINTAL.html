@@ -45,6 +45,15 @@
             margin: 1px;
             font-style: italic;
         }
+        p{
+            font-size: 2.5vmin;
+            text-align: center;
+            color: rgb(79, 119, 128);
+            user-select: none;
+        }
+        #viewer:hover p{
+            color: rgb(106, 167, 182);
+        }
         .moving-element{
             position: relative;
             width: 400px;
@@ -83,6 +92,7 @@
             justify-self: center;
             padding: 30px;
             margin: 50px;
+            margin-bottom: 36vh;
             border: 2px solid white;
             animation:  slideup 2s ease,
                         shinebox 6s ease infinite alternate;
@@ -95,7 +105,6 @@
 
         }
         input, select{
-            margin-bottom: 20px;
             background-color: transparent;
             border: 2px solid rgb(30, 101, 119);
             border-radius: 5px;
@@ -103,12 +112,17 @@
             appearance: none;
             outline: none;
             font-family: 'Courier New', Courier, monospace;
+            transition: 0.1s ease;
+            user-select: none;
+        }
+        input:active, select:active{
+            transform: translateY(1px);
         }
         select option {
             background-color: rgb(141, 230, 252);
             color: rgb(30, 101, 119);
         }
-        input:hover, select:hover, input:focus, select:focus{
+        input:hover, select:hover, select:focus{
             border: 2px solid rgb(34, 177, 212);
             color: rgb(156, 235, 255);
         }
@@ -129,18 +143,57 @@
         .shortanswer{
             border: none;
             border-bottom: 2px solid rgb(30, 101, 119);
+            field-sizing: content;
+            min-width: 150px;
+            max-width: 100%;
         }
         .shortanswer:hover, .shortanswer:focus{
             border: none;
             border-bottom: 2px solid rgb(34, 177, 212);
+            min-width: 200px;
+        }
+        .error{
+            border-color: rgb(128, 15, 15);
+        }
+        .error:hover, .error:focus{
+            border-color: rgb(212, 36, 36);
+        }
+        .line{
+            display: flex;
+            justify-content: space-around;
+        }
+        .field{
+            margin-bottom: 50px;
+        }
+        .star{
+            font-size: 1.7em;
+            color: rgb(30, 101, 119);
+            user-select: none;
+            transition: 0.1s ease;
+        }
+        br{
+            user-select: none;
+        }
+        #viewer{
+            position: fixed;
+            left: 0;
+            bottom: -25vh;
+            width: 100%;
+            height: 40vh;
+            background: linear-gradient(180deg,rgba(86, 151, 175, 0.2),rgba(8, 15, 17, 0.2));
+            
+            transition: 0.7s ease;
+        }
+        #viewer:hover{
+            bottom: 0;
         }
 
         @keyframes slidedown {
-            0% {transform: translateY(-400%);}
+            0% {transform: translateY(-50vh);}
             100% {transform: translateY(0);}
         }
         @keyframes slideup {
-            0% {transform: translateY(400%);}
+            0% {transform: translateY(100vh);}
             100% {transform: translateY(0);}
         }
         @keyframes scrollup {
@@ -184,21 +237,24 @@
     <div id="bg">
         <div id="left-pattern"></div>
         <div id="right-pattern"></div>
+        
     </div>
+
     <h1 class="moving-element">MOVIE RATER</h1>
     <h2 class="moving-element">"Good or not, your rating still matters."</h2>
-    <form class="moving-element" id="form" onsubmit="submitForm(event)">
+
+    <form class="moving-element" id="form" onsubmit="submitForm(event)" onreset="resetForm(event)">
         <div class="field">
             <label class="label">Title:</label>
             <div class="control">
-                <input type="text" name="q1" class="shortanswer" onblur="handleBlur(event)" autocomplete="off" required>
+                <input type="text" name="q1" class="shortanswer" autocomplete="off" onblur="handleBlur(event)">
             </div>
         </div>
         
         <div class="field">
             <label class="label">Year:</label>
             <div class="control">
-                <input type="number" name="q2" class="shortanswer" onblur="handleBlur(event)" min="0" autocomplete="off" required>
+                <input type="number" name="q2" class="shortanswer" min="0" autocomplete="off" onblur="handleBlur(event)">
             </div>
         </div>
 
@@ -206,35 +262,49 @@
         <div class="field">
             <label class="label">Genre:</label>
             <div class="control">
-                <select name="q6" onblur="handleBlur(event)" required>
+                <select name="q6" onblur="handleBlur(event)">
                     <option name="q6" value="" disabled selected hidden>Choose..</option>
-                    <option name="q6" value="1">Action</option>
-                    <option name="q6" value="2">Comedy</option>
-                    <option name="q6" value="3">Horror</option>
-                    <option name="q6" value="4">Drama</option>
-                    <option name="q6" value="5">Sci-fi</option>
-                    <option name="q6" value="6">Romance</option>
-                    <option name="q6" value="7">Thriller</option>
-                    <option name="q6" value="8">Fantasy</option>
-                    <option name="q6" value="9">Documentary</option>
-                    <option name="q6" value="10">Historical</option>
+                    <option name="q6" value="Action">Action</option>
+                    <option name="q6" value="Comedy">Comedy</option>
+                    <option name="q6" value="Horror">Horror</option>
+                    <option name="q6" value="Drama">Drama</option>
+                    <option name="q6" value="Sci-fi">Sci-fi</option>
+                    <option name="q6" value="Romance">Romance</option>
+                    <option name="q6" value="Thriller">Thriller</option>
+                    <option name="q6" value="Fantasy">Fantasy</option>
+                    <option name="q6" value="Documentary">Documentary</option>
+                    <option name="q6" value="Historical">Historical</option>
                 </select>
             </div>
         </div>
 
+        <div class="field">
+            <label class="label">Rating:</label><br>
+            <span class="star" onclick="clickStar(event)" onmouseenter="hoverStar(event)" onmouseleave="unhoverStar(event)" onmousedown="pressStar(event)">&#9734;</span><span class="star" onclick="clickStar(event)" onmouseenter="hoverStar(event)" onmouseleave="unhoverStar(event)" onmousedown="pressStar(event)">&#9734;</span><span class="star" onclick="clickStar(event)" onmouseenter="hoverStar(event)" onmouseleave="unhoverStar(event)" onmousedown="pressStar(event)">&#9734;</span><span class="star" onclick="clickStar(event)" onmouseenter="hoverStar(event)" onmouseleave="unhoverStar(event)" onmousedown="pressStar(event)">&#9734;</span><span class="star" onclick="clickStar(event)" onmouseenter="hoverStar(event)" onmouseleave="unhoverStar(event)" onmousedown="pressStar(event)">&#9734;</span>
+        </div>
+
         <div class="line">
-            <input type="submit">
+            <input type="submit" value="Add Movie">
             <input type="reset">
         </div>
         
     </form>
 
+    <div id="viewer">
+        <p>View Movie List</p>
+    </div>
+
     <script>
         const form = document.getElementById('form');
         const movingElement = document.getElementsByClassName('moving-element');
+        const star = document.getElementsByClassName('star');
+
+        rating = 0;
+
         form.addEventListener('animationend', (event) => {
             document.body.style.overflow = "visible";
         })
+
         document.addEventListener('mousemove', (event) => {
 
             const mouseX = event.clientX;
@@ -247,5 +317,99 @@
                 movingElement[i].style.top = `${-mouseY/60 + height/120}px`;
             }
         });
+
+        function submitForm(event){
+            event.preventDefault();
+            movies = JSON.parse(localStorage.getItem('movies')) || [];
+            for (let i = 0; i < form.length-2; i++){
+                if (form[i].value == ""){
+                    for (let i = 0; i < form.length-2; i++){
+                        if (form[i].value == ""){
+                            form[i].classList.add("error");
+                        }
+                    }
+                    return;
+                }
+            }
+
+            for (let i = 0; i < movies.length; i++){
+                if (movies[i].title == form[0].value && movies[i].year == form[1].value && movies[i].genre == form[2].value){
+                    movies[i].rating = (movies[i].rating*movies[i].rates+rating)/(movies[i].rates+1)
+                    movies[i].rates++;
+                    localStorage.setItem('movies', JSON.stringify(movies));
+                    return;
+                }
+            }
+            movies.push({   
+                title: form[0].value,
+                year: form[1].value,
+                genre: form[2].value,
+                rating: rating,
+                rates: 1
+            });
+            localStorage.setItem('movies', JSON.stringify(movies));
+
+        }
+        function handleBlur(event){
+            console.log(event.target);
+            if (event.target.classList.contains("error")){
+                if (event.target.value != "")
+                    event.target.classList.remove("error");
+            }
+        }
+        function resetForm(event){
+            for (let i = 0; i < form.length-2; i++){
+                if (form[i].classList.contains("error")){
+                    form[i].classList.remove("error");
+                }
+            }
+            for (let i = 0; i < star.length; i++){
+                star[i].innerHTML = "&#9734;";
+            }
+            rating = 0;
+        }
+        function clickStar(event){
+            if (event.target.innerHTML == "★"){
+                for (let i = 0; i < star.length; i++){
+                    if (star[i] == event.target && star[i+1].innerHTML == "☆" || star[star.length-1] == event.target){
+                        for (let j = 0; j < star.length; j++){
+                            star[j].innerHTML = "☆";
+                        }
+                        rating = 0;
+                        hoverStar(event);
+                        return;
+                    }
+                }
+            }
+
+            for (let i = 0; i < star.length; i++){
+                star[i].innerHTML = "&#9733;";
+                if (star[i] == event.target){
+                    for (let j = i+1; j < star.length; j++){
+                        star[j].innerHTML = "&#9734;";
+                    }
+                    rating = i+1;
+                    break;
+                }
+            }
+            hoverStar(event);
+        }
+        function hoverStar(event){
+            for (let i = 0; i < star.length; i++){
+                star[i].style.color = "rgb(34, 177, 212)";
+                if (star[i] == event.target)
+                    break;
+            }
+        }
+        function unhoverStar(event){
+            for (let i = 0; i < star.length; i++){
+                star[i].style.color = "";
+            }
+        }
+        function pressStar(event){
+            for (let i = 0; i < star.length; i++){
+                star[i].style.color = "";
+            }
+        }
     </script>
 </body>
