@@ -19,12 +19,14 @@
     body{
       font-family: 'Ubuntu', sans-serif;
       background-color: rgb(119, 233, 223);
+      overflow: hidden;
     }
     h1{
       font-size: 2em;
       font-weight: bold;
       color: rgb(76, 245, 236);
       text-shadow: 0 0 10px rgb(29, 97, 95);
+      margin-bottom: 150px;
     }
     nav ul{
       list-style: none;
@@ -51,6 +53,26 @@
       background-color: rgb(83, 236, 229);
       transform: scale(110%);
     }
+    .me{
+        position: absolute;
+        width: 60%;
+        height: 100%;
+        top: 0;
+        right: -100%;
+        animation: slidein 0.6s ease forwards;
+        background: url('https://raw.githubusercontent.com/tomasdmacalintal/CS3_4thQtrPortfolio/main/assets/images/me_1.png');
+        background-repeat: no-repeat;
+        background-position: 60% -50%;
+        transform: scaleX(-1);
+    }
+    @keyframes slidein {
+        0% {right: -100%;}
+        100% {right: 0;}
+    }
+    @keyframes slideout {
+        0% {right: 0;}
+        100% {right: 200%;}
+    }
 
   </style>
 </head>
@@ -59,9 +81,47 @@
    <h1>Links to Tomas' 4TH QUARTER work</h1>
    <nav>
     <ul>
-      <li><a href="./public/quarter 4/q41gPotassiumMACALINTAL.html"> Q4 First and Second Graded Exercise </a></li>
+      <li><a href="./public/quarter 4/q41gPotassiumMACALINTAL.html" class="link"> Q4 First and Second Graded Exercise </a></li>
     </ul>
    </nav>
   </section>
+
+  <script>
+    const links = document.getElementsByClassName('link');
+    for (let i = 0; i < links.length; i++){
+        links[i].addEventListener('mouseenter', (event) => {
+            createMe(i);
+        });
+        links[i].addEventListener('mouseleave', (event) => {
+            removeMe(i);
+        });
+    }
+    function createMe(i){
+        if (document.getElementById('me-'+i)) return;
+
+        me = document.createElement('div');
+        me.className = 'me';
+        me.id = 'me-'+i;
+        document.body.appendChild(me);
+    }
+    function removeMe(i){
+        const me = document.getElementById('me-' + i);
+        if (!me) return;
+
+        const animation = me.animate([
+                {right: 0},
+                {right: '200%'}
+            ],
+            {
+                duration: 600,
+                easing: 'ease',
+                fill: 'forwards'
+            }    
+        );
+        animation.onfinish = () => {
+            me.remove();
+        };
+    }
+  </script>
 </body>
 </html>
