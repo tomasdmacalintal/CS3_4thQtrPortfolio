@@ -20,8 +20,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="author" content="<your names>" />
-  <meta name="revised" content="<date today>" />
+  <meta name="author" content="Tomas Macalintal, Phipa Libunao" />
+  <meta name="revised" content="27 March 2026" />
   <style>
     body { font-family: Arial, sans-serif; }
     .header, .footer {
